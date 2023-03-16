@@ -1,0 +1,7 @@
+.env
+
+/.wwebjs_auth
+/tmp
+/dist
+/node_modules
+/.vscode
