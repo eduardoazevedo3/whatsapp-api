@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { Message } from '../models'
-import ApiController from './ApiController'
+import ApiController from './api.controller'
 
 class MessageController extends ApiController {
   /*
@@ -16,14 +16,10 @@ class MessageController extends ApiController {
    * GET /v1/messages/:id
    */
   async show(req: Request, res: Response) {
-    try {
-      const { id } = req.params
-      const record = await Message.where({ id }).findOne()
+    const { id } = req.params
+    const record = await Message.where({ id }).findOne()
 
-      res.send(record || 404)
-    } catch (error: any) {
-      res.send(error.message)
-    }
+    res.send(record || 404)
   }
 
   /*
@@ -36,7 +32,7 @@ class MessageController extends ApiController {
 
       res.send(record)
     } catch (error: any) {
-      res.send(error.message)
+      res.status(422).send(error.message)
     }
   }
 }

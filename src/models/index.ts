@@ -1,4 +1,4 @@
-import Client from './Client'
-import Message from './Message'
+import Client from './client.model'
+import Message from './message.model'
 
 export { Client, Message }

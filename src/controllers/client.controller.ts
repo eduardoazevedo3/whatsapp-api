@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
 import QRCode from 'qrcode'
 import { Client } from '../models'
-import WhatappService from '../services/WhatsappService'
+import WhatappService from '../services/whatsapp.service'
 import { parameterizeString } from '../utils'
-import ApiController from './ApiController'
+import ApiController from './api.controller'
 
 class ClientController extends ApiController {
   /*
@@ -19,14 +19,10 @@ class ClientController extends ApiController {
    * GET /v1/clients/:key
    */
   async show(req: Request, res: Response) {
-    try {
-      const { key } = req.params
-      const record = await Client.where({ key }).findOne()
+    const { key } = req.params
+    const record = await Client.where({ key }).findOne()
 
-      res.send(record || 404)
-    } catch (error: any) {
-      res.send(error.message)
-    }
+    res.send(record || 404)
   }
 
   /*
@@ -42,7 +38,7 @@ class ClientController extends ApiController {
       if (error.code == 11000) {
         res.send(`Client "${error.keyValue.key}" already exists`)
       } else {
-        res.send(error.message)
+        res.status(422).send(error.message)
       }
     }
   }
@@ -66,7 +62,7 @@ class ClientController extends ApiController {
 
         res.send(record)
       } catch (error: any) {
-        res.send(error.message)
+        res.status(422).send(error.message)
       }
     })
 
@@ -83,7 +79,7 @@ class ClientController extends ApiController {
 
       res.send(record || 404)
     } catch (error: any) {
-      res.send(error.message)
+      res.status(422).send(error.message)
     }
   }
 }
